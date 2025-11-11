@@ -1,0 +1,2 @@
+python api.py -dr "reference\【调皮】毕竟我这么好看，从来没有化过妆嘛.wav" -dt "毕竟我这么好看，从来没有化过妆嘛。" -dl "zh" -s "SoVITS_weights_v2\【GPT2.0】Elysia_e24_s13080.pth" -g "GPT_weights_v2\【GPT2.0】Elysia-e20.ckpt"
+
