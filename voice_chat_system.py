@@ -16,6 +16,11 @@ class VoiceChatSystem:
         self.current_response = ""
         self.enable_tts = enable_tts
         self.processing_lock = Lock()
+        self.response_callback = None  # 响应回调函数
+
+    def set_response_callback(self, callback):
+        """设置响应回调函数"""
+        self.response_callback = callback
 
     def stream_response_callback(self, content, done=False):
         """流式回复回调函数"""
@@ -23,8 +28,15 @@ class VoiceChatSystem:
             print(f"\n{'=' * 60}")
             self.current_response = ""
             print(" 可以继续提问（按住空格键录音）")
+
+            # 调用GUI回调
+            if self.response_callback:
+                self.response_callback("", done=True)
         else:
             self.current_response += content
+            # 调用GUI回调
+            if self.response_callback:
+                self.response_callback(content, done=False)
 
     def process_ai_response(self, user_text):
         """在单独线程中处理AI回复"""
@@ -67,8 +79,8 @@ class VoiceChatSystem:
 
         return True
 
-    def run(self):
-        """运行语音聊天系统"""
+    def run_cli(self):
+        """运行命令行版本的语音聊天系统"""
         print("=" * 60)
         print("智能语音聊天机器人")
         print("=" * 60)
